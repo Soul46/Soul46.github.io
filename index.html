@@ -37,8 +37,8 @@
   <div id="isMoving">Waiting for sensors...</div>
   <br>
   <div id="xAvg">Waiting for X Axis average...</div>
-  <div id="yAvg">Waiting for X Axis average...</div>
-  <div id="zAvg">Waiting for X Axis average...</div>
+  <div id="yAvg">Waiting for Y Axis average...</div>
+  <div id="zAvg">Waiting for Z Axis average...</div>
   <div id="totAvg">Total Average: </div>
   
 
@@ -134,10 +134,10 @@ console.log(response);
           sumy += arrayy[j+ (time*(num-1))];
           sumz += arrayz[j+ (time*(num-1))];
         }
-        document.getElementById('xAvg').innerHTML = "Average on x axis: " + (Math.abs(sommx/time)) + " con cont: " + cont + " con num: " + num;
-        document.getElementById('yAvg').innerHTML = "Average on y axis: " + (Math.abs(sommy/time));
-        document.getElementById('zAvg').innerHTML = "Average on z axis: " + (Math.abs(sommz/time));
-        document.getElementById('totAvg').innerHTML = "Media Totale: " + (Math.abs(sumx/time) + Math.abs(sumy/time) + Math.abs(sumz/time));
+        document.getElementById('xAvg').innerHTML = "Average on x axis: " + (Math.abs(sumx/time)) + " con cont: " + cont + " con num: " + num;
+        document.getElementById('yAvg').innerHTML = "Average on y axis: " + (Math.abs(sumy/time));
+        document.getElementById('zAvg').innerHTML = "Average on z axis: " + (Math.abs(sumz/time));
+        document.getElementById('totAvg').innerHTML = "Total Average: " + (Math.abs(sumx/time) + Math.abs(sumy/time) + Math.abs(sumz/time));
       }
 
 
