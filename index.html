@@ -41,6 +41,8 @@
   <div id="zAvg">Waiting for Z Axis average...</div>
   <div id="totAvg">Total Average: </div>
   
+  <div id="prova1">Waiting for Z Axis average...</div>
+  <div id="prova2">Total Average: </div>
 
   <script>
 
@@ -61,6 +63,7 @@ if (this.readyState == 4 && this.status == 200) {
 
 }
 
+  document.getElementById('prova1').innerHTML = response;
   console.log(response);					
 
 }
@@ -84,6 +87,7 @@ var response = JSON.parse(this.responseText);
 
 }
 
+document.getElementById('prova2').innerHTML = response;		
 console.log(response);					
 
 }
