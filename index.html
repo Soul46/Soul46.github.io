@@ -62,7 +62,7 @@ if (this.readyState == 4 && this.status == 200) {
   var response = JSON.parse(this.responseText);
   var tmp = response.avgAsseX;
 
-  document.getElementById('prova1').innerHTML = tmp;
+  document.getElementById('prova1').innerHTML = tmp[0].value;
   console.log(tmp[0].value);	
 
 }
@@ -89,7 +89,7 @@ if (this.readyState == 4 && this.status == 200) {
 var response = JSON.parse(this.responseText);
 var tmp2 = response.sumAxis;
 
-document.getElementById('prova2').innerHTML = tmp2;
+document.getElementById('prova2').innerHTML = tmp2[0].value;
 console.log(tmp2[0].value);	
 
 }
