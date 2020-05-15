@@ -41,8 +41,8 @@
   <div id="zAvg">Waiting for Z Axis average...</div>
   <div id="totAvg">Total Average: </div>
   
-  <div id="prova1">Waiting for Z Axis average...</div>
-  <div id="prova2">Total Average: </div>
+  <div id="test1">Waiting for Z Axis average...</div>
+  <div id="test2">Total Average: </div>
 
   <script>
 
@@ -62,8 +62,9 @@ if (this.readyState == 4 && this.status == 200) {
   var response = JSON.parse(this.responseText);
   var tmp = response.avgAsseX;
 
-  document.getElementById('prova1').innerHTML = tmp[0].value;
+  document.getElementById('test1').innerHTML = tmp[0].value;
   alert(tmp);
+  console.log(tmp);
 
 }
 
@@ -89,9 +90,9 @@ if (this.readyState == 4 && this.status == 200) {
 var response = JSON.parse(this.responseText);
 var tmp2 = response.sumAxis;
 
-document.getElementById('prova2').innerHTML = "tmp2[0].value;";
+document.getElementById('test2').innerHTML = tmp2[0].value;
 alert(tmp2[0].value);
-
+console.log(tmp2[0].value);
 }
 
 				
