@@ -1,49 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Accelerometer Sensor</title>  
-  <h1>Accelerometer</h1>
-  <button onclick="sensors(); prova1(); prova2();">Start</button>
-  <br/>
-  <link rel="stylesheet" href="main.css" type="text/css" media="screen, projection">
-  
-  
+
   <h1></h1>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="Ruadhan O'Donoghue">
   <meta charset="UTF-8">
 </head>
-<table id="myTable"><!--  creation of the first table -->
-  <tr> <!--  the first row is compsed by the following attributes-->
-
-  <th>X</th>
-  <th>Y</th>
-  <th>Z</th>
-  </tr>
-
-  <tr>  <!-- here I initialize an empty row that I will edit every time the telemetries update-->
-    <td>NO DATA</td>
-    <td>NO DATA</td>
-    <td>NO DATA</td>
-
-</tr>
 
 <body>
-  <br>
-  <div id="status">Click to get sensors measurements</div>
-  <div id="xAxis">Movement on X Axis</div>
-  <div id="yAxis">Movement on Y Axis</div>
-  <div id="zAxis">Movement on Z Axis</div>
-  <div id="isMoving">Waiting for sensors...</div>
-  <br>
-  <div id="xAvg">Waiting for X Axis average...</div>
-  <div id="yAvg">Waiting for Y Axis average...</div>
-  <div id="zAvg">Waiting for Z Axis average...</div>
-  <div id="totAvg">Total Average: </div>
+  <div id="header">
+    <h1 id="title">Activity Recognition</h1>
+    <img style="width: 100%; position: inherit; height: inherit;" src="foto.PNG">
+  </div>
+  <title>Accelerometer Sensor</title>
+  <div id="content">
+    <h1>Accelerometer</h1>
+    <button onclick="sensor(); prova1(); prova2();">Start</button>
+    <br/>
+    <link rel="stylesheet" href="main.css" type="text/css" media="screen, projection">
+    
+    
+    <br>
+    <div id="status">Click to get sensors measurements</div>
+    <div id="xAxis">Movement on X Axis</div>
+    <div id="yAxis">Movement on Y Axis</div>
+    <div id="zAxis">Movement on Z Axis</div>
+    <div id="isMoving">Waiting for sensors...</div>
+    <br>
+    <div id="xAvg">Waiting for X Axis average...</div>
+    <div id="yAvg">Waiting for X Axis average...</div>
+    <div id="zAvg">Waiting for X Axis average...</div>
+    <div id="totAvg">Total Average: </div>
   
-  <div id="test1">Waiting for Z Axis average...</div>
-  <div id="test2">Total Average: </div>
+    <table id="myTable"><!--  creation of the first table -->
+      <tr> <!--  the first row is compsed by the following attributes-->
+    
+      <th>Value on X Axis</th>
+      <th>Value on Y Axis</th>
+      <th>Value on Z Axis</th>
+      </tr>
+    
+      <tr>  <!-- here I initialize an empty row that I will edit every time the telemetries update-->
+        <td>NO DATA</td>
+        <td>NO DATA</td>
+        <td>NO DATA</td>
+    
+      </tr>
+    </table>
 
+  </div> 
+  <br>
+  <hr style="height:2px;border-width:0;color:gray;background-color:gray">
   <script>
 
 function prova1() {			//Displays the last hour values for temperature from both devices
@@ -60,15 +68,10 @@ xhttp.send();
 xhttp.onreadystatechange = function() {
 if (this.readyState == 4 && this.status == 200) {
   var response = JSON.parse(this.responseText);
-  var tmp = response.avgAsseX;
-
-  document.getElementById('test1').innerHTML = tmp[0].value;
-  alert(tmp);
-  console.log(tmp);
 
 }
 
-				
+  console.log(response);					
 
 }
 
@@ -88,14 +91,10 @@ xhttp.send();
 xhttp.onreadystatechange = function() {
 if (this.readyState == 4 && this.status == 200) {
 var response = JSON.parse(this.responseText);
-var tmp2 = response.sumAxis;
 
-document.getElementById('test2').innerHTML = tmp2[0].value;
-alert(tmp2[0].value);
-console.log(tmp2[0].value);
 }
 
-				
+console.log(response);					
 
 }
 
@@ -145,10 +144,10 @@ console.log(tmp2[0].value);
           sumy += arrayy[j+ (time*(num-1))];
           sumz += arrayz[j+ (time*(num-1))];
         }
-        document.getElementById('xAvg').innerHTML = "Average on x axis: " + (Math.abs(sumx/time)) + " con cont: " + cont + " con num: " + num;
-        document.getElementById('yAvg').innerHTML = "Average on y axis: " + (Math.abs(sumy/time));
-        document.getElementById('zAvg').innerHTML = "Average on z axis: " + (Math.abs(sumz/time));
-        document.getElementById('totAvg').innerHTML = "Total Average: " + (Math.abs(sumx/time) + Math.abs(sumy/time) + Math.abs(sumz/time));
+        document.getElementById('xAvg').innerHTML = "Average on x axis: " + (Math.abs(sommx/time)) + " con cont: " + cont + " con num: " + num;
+        document.getElementById('yAvg').innerHTML = "Average on y axis: " + (Math.abs(sommy/time));
+        document.getElementById('zAvg').innerHTML = "Average on z axis: " + (Math.abs(sommz/time));
+        document.getElementById('totAvg').innerHTML = "Media Totale: " + (Math.abs(sumx/time) + Math.abs(sumy/time) + Math.abs(sumz/time));
       }
 
 

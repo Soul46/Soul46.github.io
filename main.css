@@ -1,5 +1,9 @@
 table {
     border-collapse: collapse;
+    left: 10%;
+    margin-top: 20px;
+    width: 80%;
+    position: relative;
 }
 
 table th{
@@ -10,10 +14,39 @@ table th{
 }
 
 table td{
-    border: 1px solid #e3e3e3;
+    border: 1px solid #7098b9;
     padding: 4px 8px;
+    background-color: rgb(214, 227, 248);
 }
 
 table tr:nth-child(odd) td{
     background-color: #e7edf0;
+}
+
+#title {
+    position: absolute;
+    left: 45%;
+    top: 100px;
+    color: black;
+    border: 1px solid black;
+    padding: 5px;
+    background-color: aliceblue;
+}
+
+#header{
+    margin-top: -20px;
+    width: 102%;
+    height: 300px;
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+#content {
+    position: relative;
+    text-align: center;
+    font-size: 22px;
+}
+
+body{
+    background-color: rgb(201, 228, 231);
 }
