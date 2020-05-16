@@ -54,49 +54,47 @@
   <hr style="height:2px;border-width:0;color:gray;background-color:gray">
   <script>
 
-function prova1() {			//Displays the last hour values for temperature from both devices
+function prova1() {			//get aggregate latest
 
-var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   var currentTime = new Date().getTime();
   var olderTime = currentTime - 3600000;
 
-var xhttp = new XMLHttpRequest();			//First Get Request to get temperature telemetries from first device; it needs device ID, keys, and the time interval (from currentTime - 3600000 to currentTime )
-xhttp.open('GET', 'http://cloud.thingsboard.io/api/plugins/telemetry/ASSET/757d9cc0-95bf-11ea-b94b-4b8eb8a38a67/values/timeseries?keys=avgAsseX,avgAsseY,avgAsseZ,isRunning&startTs='+ olderTime + '&endTs=' + currentTime + '&limit=60&agg=AVG');
-xhttp.setRequestHeader('Content-Type', 'application/json');
-xhttp.setRequestHeader('X-Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdXBlcmFzZEBsaXZlLml0Iiwic2NvcGVzIjpbIlRFTkFOVF9BRE1JTiJdLCJ1c2VySWQiOiI1NzQ1NzFlMC05NDY4LTExZWEtYjk0Yi00YjhlYjhhMzhhNjciLCJmaXJzdE5hbWUiOiJBbmRyZWEiLCJsYXN0TmFtZSI6IkZlcnJhcmEiLCJlbmFibGVkIjp0cnVlLCJwcml2YWN5UG9saWN5QWNjZXB0ZWQiOnRydWUsImlzUHVibGljIjpmYWxzZSwidGVuYW50SWQiOiI1NzMyZDQ0MC05NDY4LTExZWEtYjk0Yi00YjhlYjhhMzhhNjciLCJjdXN0b21lcklkIjoiMTM4MTQwMDAtMWRkMi0xMWIyLTgwODAtODA4MDgwODA4MDgwIiwiaXNzIjoiY2xvdWQudGhpbmdzYm9hcmQuaW8iLCJpYXQiOjE1ODkyOTg3MDIsImV4cCI6MTU5MTA5ODcwMn0.uSgMsReC1xj_FcTYRzUEvF_9Xe4QhZGUnfyLKP4U2ghEk7YU9bFKKV6JqdStrco2gPodYV58XqESVMmelGXtNQ'); //X-Authorization to access thingsboard account
-xhttp.send();
-xhttp.onreadystatechange = function() {
-if (this.readyState == 4 && this.status == 200) {
-  var response = JSON.parse(this.responseText);
+  var xhttp = new XMLHttpRequest();			//First Get Request to get temperature telemetries from first device; it needs device ID, keys, and the time interval (from currentTime - 3600000 to currentTime )
+  xhttp.open('GET', 'http://cloud.thingsboard.io/api/plugins/telemetry/ASSET/757d9cc0-95bf-11ea-b94b-4b8eb8a38a67/values/timeseries?keys=avgAsseX,avgAsseY,avgAsseZ,isRunning&startTs='+ olderTime + '&endTs=' + currentTime + '&limit=60&agg=AVG');
+  xhttp.setRequestHeader('Content-Type', 'application/json');
+  xhttp.setRequestHeader('X-Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdXBlcmFzZEBsaXZlLml0Iiwic2NvcGVzIjpbIlRFTkFOVF9BRE1JTiJdLCJ1c2VySWQiOiI1NzQ1NzFlMC05NDY4LTExZWEtYjk0Yi00YjhlYjhhMzhhNjciLCJmaXJzdE5hbWUiOiJBbmRyZWEiLCJsYXN0TmFtZSI6IkZlcnJhcmEiLCJlbmFibGVkIjp0cnVlLCJwcml2YWN5UG9saWN5QWNjZXB0ZWQiOnRydWUsImlzUHVibGljIjpmYWxzZSwidGVuYW50SWQiOiI1NzMyZDQ0MC05NDY4LTExZWEtYjk0Yi00YjhlYjhhMzhhNjciLCJjdXN0b21lcklkIjoiMTM4MTQwMDAtMWRkMi0xMWIyLTgwODAtODA4MDgwODA4MDgwIiwiaXNzIjoiY2xvdWQudGhpbmdzYm9hcmQuaW8iLCJpYXQiOjE1ODkyOTg3MDIsImV4cCI6MTU5MTA5ODcwMn0.uSgMsReC1xj_FcTYRzUEvF_9Xe4QhZGUnfyLKP4U2ghEk7YU9bFKKV6JqdStrco2gPodYV58XqESVMmelGXtNQ'); //X-Authorization to access thingsboard account
+  xhttp.send();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var response = JSON.parse(this.responseText);
 
-}
+    }
 
-  console.log(response);					
+      console.log(response);					
 
-}
+  }
 
 };
 
-function prova2() {			//Displays the last hour values for temperature from both devices
+function prova2() {			//get stream aggregate
 
-var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-var currentTime = new Date().getTime();
-var olderTime = currentTime - 3600000;
+  var currentTime = new Date().getTime();
+  var olderTime = currentTime - 3600000;
 
-var xhttp = new XMLHttpRequest();			//First Get Request to get temperature telemetries from first device; it needs device ID, keys, and the time interval (from currentTime - 3600000 to currentTime )
-xhttp.open('GET', 'http://cloud.thingsboard.io/api/plugins/telemetry/ASSET/6d40f7e0-95f2-11ea-b94b-4b8eb8a38a67/values/timeseries?keys=sumAxis&startTs='+ olderTime + '&endTs=' + currentTime + '&limit=60&agg=AVG');
-xhttp.setRequestHeader('Content-Type', 'application/json');
-xhttp.setRequestHeader('X-Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdXBlcmFzZEBsaXZlLml0Iiwic2NvcGVzIjpbIlRFTkFOVF9BRE1JTiJdLCJ1c2VySWQiOiI1NzQ1NzFlMC05NDY4LTExZWEtYjk0Yi00YjhlYjhhMzhhNjciLCJmaXJzdE5hbWUiOiJBbmRyZWEiLCJsYXN0TmFtZSI6IkZlcnJhcmEiLCJlbmFibGVkIjp0cnVlLCJwcml2YWN5UG9saWN5QWNjZXB0ZWQiOnRydWUsImlzUHVibGljIjpmYWxzZSwidGVuYW50SWQiOiI1NzMyZDQ0MC05NDY4LTExZWEtYjk0Yi00YjhlYjhhMzhhNjciLCJjdXN0b21lcklkIjoiMTM4MTQwMDAtMWRkMi0xMWIyLTgwODAtODA4MDgwODA4MDgwIiwiaXNzIjoiY2xvdWQudGhpbmdzYm9hcmQuaW8iLCJpYXQiOjE1ODkyOTg3MDIsImV4cCI6MTU5MTA5ODcwMn0.uSgMsReC1xj_FcTYRzUEvF_9Xe4QhZGUnfyLKP4U2ghEk7YU9bFKKV6JqdStrco2gPodYV58XqESVMmelGXtNQ'); //X-Authorization to access thingsboard account
-xhttp.send();
-xhttp.onreadystatechange = function() {
-if (this.readyState == 4 && this.status == 200) {
-var response = JSON.parse(this.responseText);
+  var xhttp = new XMLHttpRequest();			//First Get Request to get temperature telemetries from first device; it needs device ID, keys, and the time interval (from currentTime - 3600000 to currentTime )
+  xhttp.open('GET', 'http://cloud.thingsboard.io/api/plugins/telemetry/ASSET/6d40f7e0-95f2-11ea-b94b-4b8eb8a38a67/values/timeseries?keys=sumAxis&startTs='+ olderTime + '&endTs=' + currentTime + '&limit=60&agg=AVG');
+  xhttp.setRequestHeader('Content-Type', 'application/json');
+  xhttp.setRequestHeader('X-Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdXBlcmFzZEBsaXZlLml0Iiwic2NvcGVzIjpbIlRFTkFOVF9BRE1JTiJdLCJ1c2VySWQiOiI1NzQ1NzFlMC05NDY4LTExZWEtYjk0Yi00YjhlYjhhMzhhNjciLCJmaXJzdE5hbWUiOiJBbmRyZWEiLCJsYXN0TmFtZSI6IkZlcnJhcmEiLCJlbmFibGVkIjp0cnVlLCJwcml2YWN5UG9saWN5QWNjZXB0ZWQiOnRydWUsImlzUHVibGljIjpmYWxzZSwidGVuYW50SWQiOiI1NzMyZDQ0MC05NDY4LTExZWEtYjk0Yi00YjhlYjhhMzhhNjciLCJjdXN0b21lcklkIjoiMTM4MTQwMDAtMWRkMi0xMWIyLTgwODAtODA4MDgwODA4MDgwIiwiaXNzIjoiY2xvdWQudGhpbmdzYm9hcmQuaW8iLCJpYXQiOjE1ODkyOTg3MDIsImV4cCI6MTU5MTA5ODcwMn0.uSgMsReC1xj_FcTYRzUEvF_9Xe4QhZGUnfyLKP4U2ghEk7YU9bFKKV6JqdStrco2gPodYV58XqESVMmelGXtNQ'); //X-Authorization to access thingsboard account
+  xhttp.send();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var response = JSON.parse(this.responseText);
 
-}
+    }
 
-console.log(response);					
+    console.log(response);					
 
-}
+  }
 
 };
     
