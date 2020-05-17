@@ -115,9 +115,9 @@
   var zValues = [];
   var timestamps = [];
   var TS = [];
+  var tmpSma = [];
   var smaValue = [];
   var runningTable = [];
-  smaValue[0] = 0.0;
 
 function jsFunction(value) /* function from dropdown list */
 {
@@ -292,7 +292,6 @@ xhttp3.onreadystatechange = function() {
 
       for (var i = 0; i < xValues.length; i++) {			//For cycle to build tabCloud table.
 
-        var tmpSma = [];
         tmpSma[-1] = 0.0;
 
         tmpSma[i] = ((xValues[i] + yValues[i] + zValues[i])/3);
