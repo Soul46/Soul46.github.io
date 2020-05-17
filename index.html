@@ -93,8 +93,10 @@
           <thead>
             <tr>
               <th>ts</th>
-              <th style="width: 25%">Timestamp</th>
-              <th>Average</th>
+              <th>Average on X</th>
+              <th>Average on Y</th>
+              <th>Average on Z</th>
+              <th>SMA</th>
               <th>is Running</th>
             </tr>
         </thead>
@@ -212,6 +214,13 @@ function prova2() {			//get stream aggregate
       var arrayy = [];
       var arrayz = [];
       let status = document.getElementById('status');
+
+      var xValues = [];
+      var yValues = [];
+      var zValues = [];
+      var smaValues = [];
+
+      var tableEdge = document.getElementById("tabEdge");
       
       
       if ( 'Accelerometer' in window ) {
@@ -250,19 +259,41 @@ function prova2() {			//get stream aggregate
               sumz += Math.abs(c[j+ (time*(num-1))]);
             }
 
+            var currentTime = new Date().getTime();
             var SMA = Math.abs(sumx/time) + Math.abs(sumy/time) + Math.abs(sumz/time);
             var trsh = 1.0;
 
-            document.getElementById('xAvg').innerHTML = "Average on x axis: " + (Math.abs(sumx/time)) + " con cont: " + cont + " con num: " + num;
-            document.getElementById('yAvg').innerHTML = "Average on y axis: " + (Math.abs(sumy/time));
-            document.getElementById('zAvg').innerHTML = "Average on z axis: " + (Math.abs(sumz/time));
-            document.getElementById('totAvg').innerHTML = "Signal Magnitude Area: " + SMA;
+            var row = tableEdge.insertRow();
 
-            if (SMA > trsh)
+            var cell0 = row.insertCell(0);
+            var cell1 = row.insertCell(1);
+            var cell2 = row.insertCell(2);
+            var cell3 = row.insertCell(3);
+            var cell4 = row.insertCell(4);
+            var cell5 = row.insertCell(5);
+
+            document.getElementById('xAvg').innerHTML = "Average on x axis: " + (Math.abs(sumx/time)) + " con cont: " + cont + " con num: " + num;
+            cell0.innerHTML = currentTime;
+            xValues[num] = Math.abs(sumx/time);
+            cell1.innerHTML = xValues[num];
+            document.getElementById('yAvg').innerHTML = "Average on y axis: " + (Math.abs(sumy/time));
+            yValues[num] = Math.abs(sumy/time);
+            cell2.innerHTML = yValues[num];
+            document.getElementById('zAvg').innerHTML = "Average on z axis: " + (Math.abs(sumz/time));
+            zValues[num] = Math.abs(sumz/time)
+            cell3.innerHTML = zValues[num];
+            document.getElementById('totAvg').innerHTML = "Signal Magnitude Area: " + SMA;
+            smaValues[num] = SMA;
+            cell4.innerHTML = smaValues[num];
+
+            if (SMA > trsh) {
             document.getElementById('movement').innerHTML = "Moving";
-          
-           else
+            cell5.innerHTML = "Moving";
+            } else {
             document.getElementById('movement').innerHTML = "Staying still";
+            cell5.innerHTML = "Staying still";
+            }
+
           }
 
 
