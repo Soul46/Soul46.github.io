@@ -286,11 +286,13 @@ xhttp3.onreadystatechange = function() {
       console.log("table functi");
       console.log(timestamps);
       console.log(TS);
-      console.log(xValues);
+      console.log(xValues.length);
       console.log(yValues);
       console.log(zValues);
 
-      for (var i = 0; i < xValues.length; i++) {			//For cycle to build tabCloud table.
+      for (var i = 0; i < xValues.length; i++) {			//For cycle to build tabEdge table.
+
+        console.log("prova");
 
         tmpSma[-1] = 0.0;
 
