@@ -289,8 +289,6 @@ xhttp3.onreadystatechange = function() {
       console.log(xValues);
       console.log(yValues);
       console.log(zValues);
-      console.log(smaValue);
-      console.log(runningTable);
 
       for (var i = 0; i < xValues.length; i++) {			//For cycle to build tabCloud table.
 
@@ -327,6 +325,9 @@ xhttp3.onreadystatechange = function() {
           cell5.innerHTML = smaValue[i];
           cell6.innerHTML = runningTable[i];
       }
+
+      console.log(smaValue);
+      console.log(runningTable);
 
     }
     
