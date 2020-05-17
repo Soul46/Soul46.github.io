@@ -253,7 +253,7 @@ xhttp2.onreadystatechange = function() {
 
         for (var i = 0; i < yTMP.length; i++) {			//For cycle to build tabCloud table.
 
-              yValues[i] = Number(avg[i].value).toFixed(2);
+              yValues[i] = Number(yTMP[i].value).toFixed(2);
         }
   }			
 }
@@ -272,7 +272,7 @@ xhttp3.onreadystatechange = function() {
 
         for (var i = 0; i < zTMP.length; i++) {			//For cycle to build tabCloud table.
 
-              zValues = Number(avg[i].value).toFixed(2);
+              zValues = Number(zTMP[i].value).toFixed(2);
         }
   }
 }
