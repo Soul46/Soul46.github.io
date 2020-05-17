@@ -296,7 +296,9 @@ xhttp3.onreadystatechange = function() {
 
         tmpSma[i] = ( (xValues[i] + yValues[i] + zValues[i] ) /3);
 
-        smaValue[i] = Number(tmpSma[i] - tmpSma[i-1]);
+        smaValue[i] = (Number(tmpSma[i]) - Number(tmpSma[i-1]) );
+
+        console.log(tmpSma);
 
         if (smaValue[i] > 1) {
           runningTable[i] = "is Running";
