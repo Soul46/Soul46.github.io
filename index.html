@@ -93,6 +93,7 @@
           <thead>
             <tr>
               <th>ts</th>
+              <th style="width: 25%;">Timestamp</th>
               <th>Average on X</th>
               <th>Average on Y</th>
               <th>Average on Z</th>
@@ -106,7 +107,17 @@
       </div>
     </div>
   </div>
-  <script>
+
+<script>
+
+  var xValues = [];
+  var yValues = [];
+  var zValues = [];
+  var timestamps = [];
+  var TS = [];
+  var smaValue = [];
+  var runningTable = [];
+  smaValue[0] = 0.0;
 
 function jsFunction(value) /* function from dropdown list */
 {
@@ -126,28 +137,6 @@ function jsFunction(value) /* function from dropdown list */
       document.getElementById('tableDiv2').style.display = "none";  
     };
 }
-
-function prova1() {			//get aggregate latest
-
-  var currentTime = new Date().getTime();
-  var olderTime = currentTime - 3600000;
-
-  var xhttp = new XMLHttpRequest();			//First Get Request to get temperature telemetries from first device; it needs device ID, keys, and the time interval (from currentTime - 3600000 to currentTime )
-  xhttp.open('GET', 'https://cloud.thingsboard.io/api/plugins/telemetry/ASSET/757d9cc0-95bf-11ea-b94b-4b8eb8a38a67/values/timeseries?keys=avgAsseX,avgAsseY,avgAsseZ,isRunning&startTs='+ olderTime + '&endTs=' + currentTime + '&limit=60&agg=AVG');
-  xhttp.setRequestHeader('Content-Type', 'application/json');
-  xhttp.setRequestHeader('X-Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdXBlcmFzZEBsaXZlLml0Iiwic2NvcGVzIjpbIlRFTkFOVF9BRE1JTiJdLCJ1c2VySWQiOiI1NzQ1NzFlMC05NDY4LTExZWEtYjk0Yi00YjhlYjhhMzhhNjciLCJmaXJzdE5hbWUiOiJBbmRyZWEiLCJsYXN0TmFtZSI6IkZlcnJhcmEiLCJlbmFibGVkIjp0cnVlLCJwcml2YWN5UG9saWN5QWNjZXB0ZWQiOnRydWUsImlzUHVibGljIjpmYWxzZSwidGVuYW50SWQiOiI1NzMyZDQ0MC05NDY4LTExZWEtYjk0Yi00YjhlYjhhMzhhNjciLCJjdXN0b21lcklkIjoiMTM4MTQwMDAtMWRkMi0xMWIyLTgwODAtODA4MDgwODA4MDgwIiwiaXNzIjoiY2xvdWQudGhpbmdzYm9hcmQuaW8iLCJpYXQiOjE1ODkyOTg3MDIsImV4cCI6MTU5MTA5ODcwMn0.uSgMsReC1xj_FcTYRzUEvF_9Xe4QhZGUnfyLKP4U2ghEk7YU9bFKKV6JqdStrco2gPodYV58XqESVMmelGXtNQ'); //X-Authorization to access thingsboard account
-  xhttp.send();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var response = JSON.parse(this.responseText);
-
-    }
-
-      console.log(response);					
-
-  }
-
-};
 
 function prova2() {			//get stream aggregate
 
@@ -207,6 +196,128 @@ function prova2() {			//get stream aggregate
   }
 
 };
+
+function prova1() {			//get stream aggregate
+
+var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var currentTime = new Date().getTime();
+var olderTime = currentTime - 3600000;
+
+var xhttp = new XMLHttpRequest();			// Get Request sumAxis and isRunning variables telemetries from asset; it needs device ID, keys, and the time interval (from currentTime - 3600000 to currentTime )
+xhttp.open('GET', 'https://cloud.thingsboard.io/api/plugins/telemetry/DEVICE/46f7a340-95f2-11ea-b94b-4b8eb8a38a67/values/timeseries?keys=axis&startTs='+ olderTime + '&endTs=' + currentTime + '&limit=60&agg=AVG');
+xhttp.setRequestHeader('Content-Type', 'application/json');
+xhttp.setRequestHeader('X-Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdXBlcmFzZEBsaXZlLml0Iiwic2NvcGVzIjpbIlRFTkFOVF9BRE1JTiJdLCJ1c2VySWQiOiI1NzQ1NzFlMC05NDY4LTExZWEtYjk0Yi00YjhlYjhhMzhhNjciLCJmaXJzdE5hbWUiOiJBbmRyZWEiLCJsYXN0TmFtZSI6IkZlcnJhcmEiLCJlbmFibGVkIjp0cnVlLCJwcml2YWN5UG9saWN5QWNjZXB0ZWQiOnRydWUsImlzUHVibGljIjpmYWxzZSwidGVuYW50SWQiOiI1NzMyZDQ0MC05NDY4LTExZWEtYjk0Yi00YjhlYjhhMzhhNjciLCJjdXN0b21lcklkIjoiMTM4MTQwMDAtMWRkMi0xMWIyLTgwODAtODA4MDgwODA4MDgwIiwiaXNzIjoiY2xvdWQudGhpbmdzYm9hcmQuaW8iLCJpYXQiOjE1ODkyOTg3MDIsImV4cCI6MTU5MTA5ODcwMn0.uSgMsReC1xj_FcTYRzUEvF_9Xe4QhZGUnfyLKP4U2ghEk7YU9bFKKV6JqdStrco2gPodYV58XqESVMmelGXtNQ'); //X-Authorization to access thingsboard account
+xhttp.send();
+xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    var response = JSON.parse(this.responseText);
+
+    //storing parsed results in corresponding vectors, so we can access the data.
+        var xTMP = response.axis;
+
+        for (var i = 0; i < xTMP.length; i++) {			//For cycle to build tabCloud table.
+
+              var date = new Date(xTMP[i].ts);
+              var year = date.getFullYear();
+              var month = months[date.getMonth()];
+              var day = date.getDate();
+              // Hours part from the timestamp
+              var hours = date.getHours();
+              // Minutes part from the timestamp
+              var minutes = date.getMinutes();
+              // Seconds part from the timestamp
+              var seconds = date.getSeconds();
+              var milliseconds = date.getMilliseconds();
+
+              // Will display timestamp in a human-friendly format
+              var formattedTime = day + " " + month + " " + year + " " + hours + ' : ' + minutes + 'm : ' + seconds + "s : " + milliseconds + "ms";
+              
+              timestamps[i] = Number(xTMP[i].ts);
+              TS[i] = formattedTime;
+              xValues[i] = Number(xTMP[i].value).toFixed(2);
+        }
+  }			
+}
+
+var xhttp2 = new XMLHttpRequest();			// Get Request sumAxis and isRunning variables telemetries from asset; it needs device ID, keys, and the time interval (from currentTime - 3600000 to currentTime )
+xhttp2.open('GET', 'https://cloud.thingsboard.io/api/plugins/telemetry/DEVICE/4c237d80-95f2-11ea-b94b-4b8eb8a38a67/values/timeseries?keys=axis&startTs='+ olderTime + '&endTs=' + currentTime + '&limit=60&agg=AVG');
+xhttp2.setRequestHeader('Content-Type', 'application/json');
+xhttp2.setRequestHeader('X-Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdXBlcmFzZEBsaXZlLml0Iiwic2NvcGVzIjpbIlRFTkFOVF9BRE1JTiJdLCJ1c2VySWQiOiI1NzQ1NzFlMC05NDY4LTExZWEtYjk0Yi00YjhlYjhhMzhhNjciLCJmaXJzdE5hbWUiOiJBbmRyZWEiLCJsYXN0TmFtZSI6IkZlcnJhcmEiLCJlbmFibGVkIjp0cnVlLCJwcml2YWN5UG9saWN5QWNjZXB0ZWQiOnRydWUsImlzUHVibGljIjpmYWxzZSwidGVuYW50SWQiOiI1NzMyZDQ0MC05NDY4LTExZWEtYjk0Yi00YjhlYjhhMzhhNjciLCJjdXN0b21lcklkIjoiMTM4MTQwMDAtMWRkMi0xMWIyLTgwODAtODA4MDgwODA4MDgwIiwiaXNzIjoiY2xvdWQudGhpbmdzYm9hcmQuaW8iLCJpYXQiOjE1ODkyOTg3MDIsImV4cCI6MTU5MTA5ODcwMn0.uSgMsReC1xj_FcTYRzUEvF_9Xe4QhZGUnfyLKP4U2ghEk7YU9bFKKV6JqdStrco2gPodYV58XqESVMmelGXtNQ'); //X-Authorization to access thingsboard account
+xhttp2.send();
+xhttp2.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    var response = JSON.parse(this.responseText);
+
+    //storing parsed results in corresponding vectors, so we can access the data.
+        var yTMP = response.axis;		
+
+        for (var i = 0; i < yTMP.length; i++) {			//For cycle to build tabCloud table.
+
+              yValues[i] = Number(avg[i].value).toFixed(2);
+        }
+  }			
+}
+
+var xhttp3 = new XMLHttpRequest();			// Get Request sumAxis and isRunning variables telemetries from asset; it needs device ID, keys, and the time interval (from currentTime - 3600000 to currentTime )
+xhttp3.open('GET', 'https://cloud.thingsboard.io/api/plugins/telemetry/DEVICE/50f550e0-95f2-11ea-b94b-4b8eb8a38a67/values/timeseries?keys=axis&startTs='+ olderTime + '&endTs=' + currentTime + '&limit=60&agg=AVG');
+xhttp3.setRequestHeader('Content-Type', 'application/json');
+xhttp3.setRequestHeader('X-Authorization', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdXBlcmFzZEBsaXZlLml0Iiwic2NvcGVzIjpbIlRFTkFOVF9BRE1JTiJdLCJ1c2VySWQiOiI1NzQ1NzFlMC05NDY4LTExZWEtYjk0Yi00YjhlYjhhMzhhNjciLCJmaXJzdE5hbWUiOiJBbmRyZWEiLCJsYXN0TmFtZSI6IkZlcnJhcmEiLCJlbmFibGVkIjp0cnVlLCJwcml2YWN5UG9saWN5QWNjZXB0ZWQiOnRydWUsImlzUHVibGljIjpmYWxzZSwidGVuYW50SWQiOiI1NzMyZDQ0MC05NDY4LTExZWEtYjk0Yi00YjhlYjhhMzhhNjciLCJjdXN0b21lcklkIjoiMTM4MTQwMDAtMWRkMi0xMWIyLTgwODAtODA4MDgwODA4MDgwIiwiaXNzIjoiY2xvdWQudGhpbmdzYm9hcmQuaW8iLCJpYXQiOjE1ODkyOTg3MDIsImV4cCI6MTU5MTA5ODcwMn0.uSgMsReC1xj_FcTYRzUEvF_9Xe4QhZGUnfyLKP4U2ghEk7YU9bFKKV6JqdStrco2gPodYV58XqESVMmelGXtNQ'); //X-Authorization to access thingsboard account
+xhttp3.send();
+xhttp3.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    var response = JSON.parse(this.responseText);
+
+    //storing parsed results in corresponding vectors, so we can access the data.
+        var zTMP = response.axis;
+
+        for (var i = 0; i < zTMP.length; i++) {			//For cycle to build tabCloud table.
+
+              zValues = Number(avg[i].value).toFixed(2);
+        }
+  }
+}
+
+};
+
+    function table() {
+
+      for (var i = 0; i < xValues.length; i++) {			//For cycle to build tabCloud table.
+
+        var tmpSma = [];
+        tmpSma[i-1] = 0.0;
+
+        tmpSma[i] = (xValues[i] + yValues[i] + zValues[i])/3;
+
+        smaValue[i] = tmpSma[i] - tmpSma[i-1];
+
+        if (smaValue[i] > 1) {
+          runningTable[i] = "is Running";
+        } else {
+          runningTable[i] = "is Walking";
+        }
+
+        var table = document.getElementById("tabCloud");
+
+        var row = table.insertRow();
+
+        var cell0 = row.insertCell(0);
+        var cell1 = row.insertCell(1);
+        var cell2 = row.insertCell(2);
+        var cell3 = row.insertCell(3);
+        var cell4 = row.insertCell(4);
+        var cell5 = row.insertCell(5);
+        var cell6 = row.insertCell(6);
+          
+          cell0.innerHTML = timestamps[i];
+          cell1.innerHTML = TS[i];
+          cell2.innerHTML = xValues[i];
+          cell3.innerHTML = yValues[i];
+          cell4.innerHTML = zValues[i];
+          cell5.innerHTML = smaValue[i];
+          cell6.innerHTML = runningTable[i];
+      }
+
+    }
     
     function sensors() {              /* function to get values from accelerometer sensor */
       var cont=-1;
@@ -214,13 +325,6 @@ function prova2() {			//get stream aggregate
       var arrayy = [];
       var arrayz = [];
       let status = document.getElementById('status');
-
-      var xValues = [];
-      var yValues = [];
-      var zValues = [];
-      var smaValues = [];
-
-      var tableEdge = document.getElementById("tabEdge");
       
       
       if ( 'Accelerometer' in window ) {
@@ -259,39 +363,19 @@ function prova2() {			//get stream aggregate
               sumz += Math.abs(c[j+ (time*(num-1))]);
             }
 
-            var currentTime = new Date().getTime();
             var SMA = Math.abs(sumx/time) + Math.abs(sumy/time) + Math.abs(sumz/time);
             var trsh = 1.0;
 
-            var row = tableEdge.insertRow();
-
-            var cell0 = row.insertCell(0);
-            var cell1 = row.insertCell(1);
-            var cell2 = row.insertCell(2);
-            var cell3 = row.insertCell(3);
-            var cell4 = row.insertCell(4);
-            var cell5 = row.insertCell(5);
 
             document.getElementById('xAvg').innerHTML = "Average on x axis: " + (Math.abs(sumx/time)) + " con cont: " + cont + " con num: " + num;
-            cell0.innerHTML = currentTime;
-            xValues[num] = Math.abs(sumx/time);
-            cell1.innerHTML = xValues[num];
             document.getElementById('yAvg').innerHTML = "Average on y axis: " + (Math.abs(sumy/time));
-            yValues[num] = Math.abs(sumy/time);
-            cell2.innerHTML = yValues[num];
             document.getElementById('zAvg').innerHTML = "Average on z axis: " + (Math.abs(sumz/time));
-            zValues[num] = Math.abs(sumz/time)
-            cell3.innerHTML = zValues[num];
             document.getElementById('totAvg').innerHTML = "Signal Magnitude Area: " + SMA;
-            smaValues[num] = SMA;
-            cell4.innerHTML = smaValues[num];
 
             if (SMA > trsh) {
             document.getElementById('movement').innerHTML = "Moving";
-            cell5.innerHTML = "Moving";
             } else {
             document.getElementById('movement').innerHTML = "Staying still";
-            cell5.innerHTML = "Staying still";
             }
 
           }
