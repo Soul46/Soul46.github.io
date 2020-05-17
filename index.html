@@ -294,7 +294,7 @@ xhttp3.onreadystatechange = function() {
 
         tmpSma[-1] = 0.0;
 
-        tmpSma[i] = ((xValues[i] + yValues[i] + zValues[i])/3);
+        tmpSma[i] = ( ( Number(xValues[i]) + Number(yValues[i]) + Number(zValues[i]) ) /3);
 
         smaValue[i] = (tmpSma[i] - tmpSma[i-1]);
 
