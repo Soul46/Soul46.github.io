@@ -291,7 +291,7 @@ xhttp3.onreadystatechange = function() {
 
         smaValue[i] = (Number(tmpSma[i]) - Number(tmpSma[i-1]) );
 
-        if (smaValue[i] > 1) {
+        if (smaValue[i] > 1 || smaValue < -1) {
           runningTable[i] = "is Running";
         } else {
           runningTable[i] = "is Walking";
