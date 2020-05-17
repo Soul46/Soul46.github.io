@@ -292,13 +292,11 @@ xhttp3.onreadystatechange = function() {
 
       for (var i = 0; i < xValues.length; i++) {			//For cycle to build tabEdge table.
 
-        console.log("prova");
-
         tmpSma[-1] = 0.0;
 
         tmpSma[i] = ( (xValues[i] + yValues[i] + zValues[i] ) /3);
 
-        smaValue[i] = (tmpSma[i] - tmpSma[i-1]);
+        smaValue[i] = Number(tmpSma[i] - tmpSma[i-1]);
 
         if (smaValue[i] > 1) {
           runningTable[i] = "is Running";
@@ -318,13 +316,13 @@ xhttp3.onreadystatechange = function() {
         var cell5 = row.insertCell(5);
         var cell6 = row.insertCell(6);
           
-          cell0.innerHTML = "timestamps[i]";
-          cell1.innerHTML = "TS[i]";
-          cell2.innerHTML = "xValues[i]";
-          cell3.innerHTML = "yValues[i]";
-          cell4.innerHTML = "zValues[i]";
-          cell5.innerHTML = "smaValue[i]";
-          cell6.innerHTML = "runningTable[i]";
+          cell0.innerHTML = timestamps[i];
+          cell1.innerHTML = TS[i];
+          cell2.innerHTML = xValues[i];
+          cell3.innerHTML = yValues[i];
+          cell4.innerHTML = zValues[i];
+          cell5.innerHTML = smaValue[i];
+          cell6.innerHTML = runningTable[i];
       }
 
       console.log(smaValue);
