@@ -33,12 +33,6 @@
     <div id="zAvg">Waiting for Z Axis average...</div>
     <div id="totAvg">Signal Magnitude Area: </div>
     <div id="movement">Waiting for measurements </div>
-    <br>
-    <div id="mediax">Attendo la media sulle x...</div>
-    <div id="mediay">Attendo la media sulle y...</div>
-    <div id="mediaz">Attendo la media sulle z...</div>
-    <div id="media">Signal Magnitude Area: </div>
-    <div id="movement">In attesa delle misurazioni... </div>
   
     <table id="myTable"><!--  creation of the first table -->
       <tr> <!--  the first row is compsed by the following attributes-->
@@ -257,18 +251,13 @@ function prova2() {			//get stream aggregate
               sumz += Math.abs(c[j+ (time*(num-1))]);
             }
 
-            var SMA = Math.abs(sumx/tempo) + Math.abs(sumy/tempo) + Math.abs(sumz/tempo);
+            var SMA = Math.abs(sumx/time) + Math.abs(sumy/time) + Math.abs(sumz/time);
             var trsh = 1.0;
 
             document.getElementById('xAvg').innerHTML = "Average on x axis: " + (Math.abs(sumx/time)) + " con cont: " + cont + " con num: " + num;
             document.getElementById('yAvg').innerHTML = "Average on y axis: " + (Math.abs(sumy/time));
             document.getElementById('zAvg').innerHTML = "Average on z axis: " + (Math.abs(sumz/time));
             document.getElementById('totAvg').innerHTML = "Signal Magnitude Area: " + SMA;
-
-          document.getElementById('mediax').innerHTML = "Media sulle x: " + (sommx/tempo) + " con cont: " + cont + " con num: " + num;
-          document.getElementById('mediay').innerHTML = "Media sulle y: " + (sommy/tempo);
-          document.getElementById('mediaz').innerHTML = "Media sulle z: " + (sommz/tempo);
-          document.getElementById('media').innerHTML = "Signal Magnitude Area: " + SMA;
 
             if (SMA > trsh)
             document.getElementById('movement').innerHTML = "Moving";
