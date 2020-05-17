@@ -8,7 +8,7 @@
   <meta charset="UTF-8">
 </head>
 
-<body onload="prova1(); prova2(); table();">
+<body onload="prova1(); prova2(); createTable();">
   <div id="header">
     <h1 id="title">Activity Recognition</h1><!-- 
     <img style="width: 100%; position: inherit; height: inherit;" src="foto.PNG"> -->
@@ -281,7 +281,9 @@ xhttp3.onreadystatechange = function() {
 
 };
 
-    function table() {
+    function createTable() {
+
+      console.log("table functi");
 
       for (var i = 0; i < xValues.length; i++) {			//For cycle to build tabCloud table.
 
@@ -298,7 +300,7 @@ xhttp3.onreadystatechange = function() {
           runningTable[i] = "is Walking";
         }
 
-        var table = document.getElementById("tabCloud");
+        var table = document.getElementById("tabEdge");
 
         var row = table.insertRow();
 
