@@ -201,7 +201,7 @@ function prova1() {			//get stream aggregate
 
 var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 var currentTime = new Date().getTime();
-var olderTime = currentTime - 360000000;
+var olderTime = currentTime - 3600000;
 
 var xhttp = new XMLHttpRequest();			// Get Request sumAxis and isRunning variables telemetries from asset; it needs device ID, keys, and the time interval (from currentTime - 3600000 to currentTime )
 xhttp.open('GET', 'https://cloud.thingsboard.io/api/plugins/telemetry/DEVICE/46f7a340-95f2-11ea-b94b-4b8eb8a38a67/values/timeseries?keys=axis&startTs='+ olderTime + '&endTs=' + currentTime + '&limit=60&agg=AVG');
