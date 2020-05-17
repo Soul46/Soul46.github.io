@@ -295,11 +295,11 @@ xhttp3.onreadystatechange = function() {
       for (var i = 0; i < xValues.length; i++) {			//For cycle to build tabCloud table.
 
         var tmpSma = [];
-        tmpSma[i-1] = 0.0;
+        tmpSma[-1] = 0.0;
 
-        tmpSma[i] = (xValues[i] + yValues[i] + zValues[i])/3;
+        tmpSma[i] = ((xValues[i] + yValues[i] + zValues[i])/3);
 
-        smaValue[i] = tmpSma[i] - tmpSma[i-1];
+        smaValue[i] = (tmpSma[i] - tmpSma[i-1]);
 
         if (smaValue[i] > 1) {
           runningTable[i] = "is Running";
