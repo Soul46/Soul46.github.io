@@ -26,8 +26,8 @@ table tr:nth-child(odd) td{
 
 #title {
     position: absolute;
-    left: 40%;
-    top: 100px;
+    left: 25%;
+    top: 40%;
     color: black;
     border: 1px solid black;
     padding: 5px;
@@ -36,10 +36,12 @@ table tr:nth-child(odd) td{
 
 #header{
     margin-top: -20px;
-    width: 102%;
+    width: 100%;
     height: 300px;
-    margin-left: -10px;
-    margin-right: -10px;
+    left: 10%;
+    position: relative;
+    max-width: 600px;
+    margin-bottom: 60px;
 }
 
 #content {
