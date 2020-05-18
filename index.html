@@ -33,6 +33,8 @@
     <div id="zAvg">Waiting for Z Axis average...</div>
     <div id="totAvg">Signal Magnitude Area: </div>
     <div id="movement">Waiting for measurements </div>
+
+    <h4>Latest Values for Edge</h4>
   
     <table id="myTable"><!--  creation of the first table -->
       <tr> <!--  the first row is compsed by the following attributes-->
@@ -43,6 +45,29 @@
       </tr>
     
       <tr>  <!-- here I initialize an empty row that I will edit every time the telemetries update-->
+        <td>NO DATA</td>
+        <td>NO DATA</td>
+        <td>NO DATA</td>
+    
+      </tr>
+    </table>
+
+    <h4>Latest Values for Cloud</h4>
+
+
+    <table id="myTable2"><!--  creation of the first table -->
+      <tr> <!--  the first row is compsed by the following attributes-->
+    
+      <th>Value on X Axis</th>
+      <th>Value on Y Axis</th>
+      <th>Value on Z Axis</th>
+      <th>Average</th>
+      <th>is Running</th>
+      </tr>
+    
+      <tr>  <!-- here I initialize an empty row that I will edit every time the telemetries update-->
+        <td>NO DATA</td>
+        <td>NO DATA</td>
         <td>NO DATA</td>
         <td>NO DATA</td>
         <td>NO DATA</td>
@@ -137,6 +162,176 @@ function jsFunction(value) /* function from dropdown list */
       document.getElementById('tableDiv2').style.display = "none";  
     };
 }
+        function LatestCloudX() {
+            // X-Authorization token
+            var token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdXBlcmFzZEBsaXZlLml0Iiwic2NvcGVzIjpbIlRFTkFOVF9BRE1JTiJdLCJ1c2VySWQiOiI1NzQ1NzFlMC05NDY4LTExZWEtYjk0Yi00YjhlYjhhMzhhNjciLCJmaXJzdE5hbWUiOiJBbmRyZWEiLCJsYXN0TmFtZSI6IkZlcnJhcmEiLCJlbmFibGVkIjp0cnVlLCJwcml2YWN5UG9saWN5QWNjZXB0ZWQiOnRydWUsImlzUHVibGljIjpmYWxzZSwidGVuYW50SWQiOiI1NzMyZDQ0MC05NDY4LTExZWEtYjk0Yi00YjhlYjhhMzhhNjciLCJjdXN0b21lcklkIjoiMTM4MTQwMDAtMWRkMi0xMWIyLTgwODAtODA4MDgwODA4MDgwIiwiaXNzIjoiY2xvdWQudGhpbmdzYm9hcmQuaW8iLCJpYXQiOjE1ODkyOTg3MDIsImV4cCI6MTU5MTA5ODcwMn0.uSgMsReC1xj_FcTYRzUEvF_9Xe4QhZGUnfyLKP4U2ghEk7YU9bFKKV6JqdStrco2gPodYV58XqESVMmelGXtNQ";
+            var entityId = "46f7a340-95f2-11ea-b94b-4b8eb8a38a67"; //this is the device token taken from thingsboard
+            var webSocket = new WebSocket("wss://cloud.thingsboard.io/api/ws/plugins/telemetry?token=" + token);
+
+            webSocket.onopen = function () {
+                var object = {
+                    tsSubCmds: [
+                        {
+                            entityType: "DEVICE",
+                            entityId: entityId,
+                            scope: "LATEST_TELEMETRY",
+                            cmdId: 10
+                        }
+                    ],
+                    historyCmds: [],
+                    attrSubCmds: []
+                };
+                var data = JSON.stringify(object);
+                webSocket.send(data);
+
+            };
+
+            webSocket.onmessage = function (event) { //in this function I store the parsed data in msg
+                var received_msg = event.data;
+                var msg=JSON.parse(event.data);
+                var tempo= msg.data.axis[0][0];
+                var data = new Date(tempo);
+
+                var table = document.getElementById("myTable2");
+
+                table.rows[1].cells[0].innerHTML = msg.data.axis[0][1];  //in this way I add in each cell of the row sensor's data
+                table.rows[1].cells[5].innerHTML = data;
+
+            };
+
+            webSocket.onclose = function (event) {
+                alert("Connection is closed!");
+            };
+        }
+
+        function LatestCloudY() {
+            // X-Authorization token
+            var token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdXBlcmFzZEBsaXZlLml0Iiwic2NvcGVzIjpbIlRFTkFOVF9BRE1JTiJdLCJ1c2VySWQiOiI1NzQ1NzFlMC05NDY4LTExZWEtYjk0Yi00YjhlYjhhMzhhNjciLCJmaXJzdE5hbWUiOiJBbmRyZWEiLCJsYXN0TmFtZSI6IkZlcnJhcmEiLCJlbmFibGVkIjp0cnVlLCJwcml2YWN5UG9saWN5QWNjZXB0ZWQiOnRydWUsImlzUHVibGljIjpmYWxzZSwidGVuYW50SWQiOiI1NzMyZDQ0MC05NDY4LTExZWEtYjk0Yi00YjhlYjhhMzhhNjciLCJjdXN0b21lcklkIjoiMTM4MTQwMDAtMWRkMi0xMWIyLTgwODAtODA4MDgwODA4MDgwIiwiaXNzIjoiY2xvdWQudGhpbmdzYm9hcmQuaW8iLCJpYXQiOjE1ODkyOTg3MDIsImV4cCI6MTU5MTA5ODcwMn0.uSgMsReC1xj_FcTYRzUEvF_9Xe4QhZGUnfyLKP4U2ghEk7YU9bFKKV6JqdStrco2gPodYV58XqESVMmelGXtNQ";
+            var entityId = "4c237d80-95f2-11ea-b94b-4b8eb8a38a67"; //this is the device token taken from thingsboard
+            var webSocket = new WebSocket("wss://cloud.thingsboard.io/api/ws/plugins/telemetry?token=" + token);
+
+
+            webSocket.onopen = function () {
+                var object = {
+                    tsSubCmds: [
+                        {
+                            entityType: "DEVICE",
+                            entityId: entityId,
+                            scope: "LATEST_TELEMETRY",
+                            cmdId: 10
+                        }
+                    ],
+                    historyCmds: [],
+                    attrSubCmds: []
+                };
+                var data = JSON.stringify(object);
+                webSocket.send(data);
+
+            };
+
+            webSocket.onmessage = function (event) { //in this function I store the parsed data in msg
+                var received_msg = event.data;
+                var msg=JSON.parse(event.data);
+                var tempo= msg.data.axis[0][0];
+                var data = new Date(tempo);
+
+                var table = document.getElementById("myTable2");
+
+                table.rows[1].cells[1].innerHTML = msg.data.axis[0][1];  //in this way I add in each cell of the row sensor's data
+                
+
+            };
+
+            webSocket.onclose = function (event) {
+                alert("Connection is closed!");
+            };
+        }
+
+        function LatestCloudZ() {
+            // X-Authorization token
+            var token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdXBlcmFzZEBsaXZlLml0Iiwic2NvcGVzIjpbIlRFTkFOVF9BRE1JTiJdLCJ1c2VySWQiOiI1NzQ1NzFlMC05NDY4LTExZWEtYjk0Yi00YjhlYjhhMzhhNjciLCJmaXJzdE5hbWUiOiJBbmRyZWEiLCJsYXN0TmFtZSI6IkZlcnJhcmEiLCJlbmFibGVkIjp0cnVlLCJwcml2YWN5UG9saWN5QWNjZXB0ZWQiOnRydWUsImlzUHVibGljIjpmYWxzZSwidGVuYW50SWQiOiI1NzMyZDQ0MC05NDY4LTExZWEtYjk0Yi00YjhlYjhhMzhhNjciLCJjdXN0b21lcklkIjoiMTM4MTQwMDAtMWRkMi0xMWIyLTgwODAtODA4MDgwODA4MDgwIiwiaXNzIjoiY2xvdWQudGhpbmdzYm9hcmQuaW8iLCJpYXQiOjE1ODkyOTg3MDIsImV4cCI6MTU5MTA5ODcwMn0.uSgMsReC1xj_FcTYRzUEvF_9Xe4QhZGUnfyLKP4U2ghEk7YU9bFKKV6JqdStrco2gPodYV58XqESVMmelGXtNQ";
+            var entityId = "50f550e0-95f2-11ea-b94b-4b8eb8a38a67"; //this is the device token taken from thingsboard
+            var webSocket = new WebSocket("wss://cloud.thingsboard.io/api/ws/plugins/telemetry?token=" + token);
+
+
+
+            webSocket.onopen = function () {
+                var object = {
+                    tsSubCmds: [
+                        {
+                            entityType: "DEVICE",
+                            entityId: entityId,
+                            scope: "LATEST_TELEMETRY",
+                            cmdId: 10
+                        }
+                    ],
+                    historyCmds: [],
+                    attrSubCmds: []
+                };
+                var data = JSON.stringify(object);
+                webSocket.send(data);
+
+            };
+
+            webSocket.onmessage = function (event) { //in this function I store the parsed data in msg
+                var received_msg = event.data;
+                var msg=JSON.parse(event.data);
+                var tempo= msg.data.axis[0][0];
+                var data = new Date(tempo);
+
+                var table = document.getElementById("myTable2");
+
+                table.rows[1].cells[2].innerHTML = msg.data.axis[0][1];  //in this way I add in each cell of the row sensor's data
+
+            };
+
+            webSocket.onclose = function (event) {
+                alert("Connection is closed!");
+            };
+        }
+
+        function LatestCloudAct() {
+            // X-Authorization token
+            var token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdXBlcmFzZEBsaXZlLml0Iiwic2NvcGVzIjpbIlRFTkFOVF9BRE1JTiJdLCJ1c2VySWQiOiI1NzQ1NzFlMC05NDY4LTExZWEtYjk0Yi00YjhlYjhhMzhhNjciLCJmaXJzdE5hbWUiOiJBbmRyZWEiLCJsYXN0TmFtZSI6IkZlcnJhcmEiLCJlbmFibGVkIjp0cnVlLCJwcml2YWN5UG9saWN5QWNjZXB0ZWQiOnRydWUsImlzUHVibGljIjpmYWxzZSwidGVuYW50SWQiOiI1NzMyZDQ0MC05NDY4LTExZWEtYjk0Yi00YjhlYjhhMzhhNjciLCJjdXN0b21lcklkIjoiMTM4MTQwMDAtMWRkMi0xMWIyLTgwODAtODA4MDgwODA4MDgwIiwiaXNzIjoiY2xvdWQudGhpbmdzYm9hcmQuaW8iLCJpYXQiOjE1ODkyOTg3MDIsImV4cCI6MTU5MTA5ODcwMn0.uSgMsReC1xj_FcTYRzUEvF_9Xe4QhZGUnfyLKP4U2ghEk7YU9bFKKV6JqdStrco2gPodYV58XqESVMmelGXtNQ";
+            var entityId = "6d40f7e0-95f2-11ea-b94b-4b8eb8a38a67"; //this is the device token taken from thingsboard
+            var webSocket = new WebSocket("wss://cloud.thingsboard.io/api/ws/plugins/telemetry?token=" + token);
+
+            webSocket.onopen = function () {
+                var object = {
+                    tsSubCmds: [
+                        {
+                            entityType: "ASSET",
+                            entityId: entityId,
+                            scope: "LATEST_TELEMETRY",
+                            cmdId: 10
+                        }
+                    ],
+                    historyCmds: [],
+                    attrSubCmds: []
+                };
+                var data = JSON.stringify(object);
+                webSocket.send(data);
+
+            };
+
+            webSocket.onmessage = function (event) { //in this function I store the parsed data in msg
+                var received_msg = event.data;
+                var msg=JSON.parse(event.data);
+                var tempo= msg.data.sumAxis[0][0];
+                var data = new Date(tempo);
+
+                var table = document.getElementById("myTable2");
+
+                table.rows[1].cells[3].innerHTML = msg.data.sumAxis[0][1];  //in this way I add in each cell of the row sensor's data
+                table.rows[1].cells[4].innerHTML = msg.data.isRunning[0][1];
+                
+
+            };
+
+            webSocket.onclose = function (event) {
+                alert("Connection is closed!");
+            };
+        }
 
 function prova2() {			//get stream aggregate
 

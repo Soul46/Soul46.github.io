@@ -61,7 +61,7 @@ body{
   }
   
   #table-scroll {
-    height:300px;
+    height:500px;
     overflow:auto;  
     margin-top:40px;
   }
