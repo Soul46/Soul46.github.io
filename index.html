@@ -16,7 +16,7 @@
   <title>Accelerometer Sensor</title>
   <div id="content">
     <h1>Accelerometer</h1>
-    <button onclick="sensors(); createTable();">Start</button>
+    <button onclick="sensors(); createTable(); LatestCloudX(); LatestCloudY(); LatestCloudZ();LatestCloudAct();">Start</button>
     <br/>
     <link rel="stylesheet" href="main.css" type="text/css" media="screen, projection">
     
@@ -71,7 +71,6 @@
         <td>NO DATA</td>
         <td>NO DATA</td>
         <td>NO DATA</td>
-    
       </tr>
     </table>
 
@@ -195,7 +194,6 @@ function jsFunction(value) /* function from dropdown list */
                 var table = document.getElementById("myTable2");
 
                 table.rows[1].cells[0].innerHTML = msg.data.axis[0][1];  //in this way I add in each cell of the row sensor's data
-                table.rows[1].cells[5].innerHTML = data;
 
             };
 
@@ -406,8 +404,6 @@ xhttp.send();
 xhttp.onreadystatechange = function() {
   if (this.readyState == 4 && this.status == 200) {
     var response = JSON.parse(this.responseText);
-
-    console.log(response);
 
     //storing parsed results in corresponding vectors, so we can access the data.
         var xTMP = response.axis;
